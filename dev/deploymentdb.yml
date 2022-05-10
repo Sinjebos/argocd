@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: votingdb
+spec:
+  selector:
+    matchLabels:
+      app: votingdb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: votingdb
+    spec:
+      containers:
+      - name: votingbackend
+        image: postgres:9.4
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: votingfrontend-service
+spec:
+  selector:
+    app: votingfrontend
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
